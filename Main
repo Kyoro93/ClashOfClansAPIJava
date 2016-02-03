@@ -1,0 +1,286 @@
+package Default;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import javax.xml.ws.http.HTTPException;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
+public class Main {
+	//Created by Samuel Lopes Mastrofrancisco - samuellm@live.com
+	private static String token = "YOUR TOKEN HERE";
+
+	public static void main(String[] args) {
+		getClansByParameters("Brazil", null, null, null, null, null, null, null, null);
+
+	}
+	
+	
+	//////////////////////////////////////////////////////////////
+	/////                      LEAGUES                       /////
+	//////////////////////////////////////////////////////////////
+	
+	
+	public static String getLeagues(){
+		try {
+            URL url = new URL ("https://api.clashofclans.com/v1/leagues");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Bearer " + token);
+            connection.setRequestProperty("Accept", "application/json");
+                        
+            InputStream content = (InputStream)connection.getInputStream();
+            BufferedReader in = new BufferedReader (new InputStreamReader (content));
+            
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonParser jp = new JsonParser();
+            JsonElement je = jp.parse(in.readLine());
+            String prettyJsonString = gson.toJson(je);
+            System.out.println(prettyJsonString);
+            
+            connection.disconnect();
+            
+            return "1";
+        } catch(HTTPException he){
+        	he.printStackTrace();
+        	return "null";
+        } catch(Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+	}
+	
+	
+	//////////////////////////////////////////////////////////////
+	/////                     LOCATIONS                      /////
+	//////////////////////////////////////////////////////////////
+	
+	
+	public static String getLocations(){
+		try {
+            URL url = new URL ("https://api.clashofclans.com/v1/locations");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Bearer " + token);
+            connection.setRequestProperty("Accept", "application/json");
+                        
+            InputStream content = (InputStream)connection.getInputStream();
+            BufferedReader in = new BufferedReader (new InputStreamReader (content));
+            
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonParser jp = new JsonParser();
+            JsonElement je = jp.parse(in.readLine());
+            String prettyJsonString = gson.toJson(je);
+            System.out.println(prettyJsonString);
+            
+            connection.disconnect();
+            
+            return "1";
+        } catch(HTTPException he){
+        	he.printStackTrace();
+        	return "null";
+        } catch(Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+	}
+	
+	public static String getLocations(String locationId){
+		try {
+            URL url = new URL ("https://api.clashofclans.com/v1/locations/" + locationId);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Bearer " + token);
+            connection.setRequestProperty("Accept", "application/json");
+                        
+            InputStream content = (InputStream)connection.getInputStream();
+            BufferedReader in = new BufferedReader (new InputStreamReader (content));
+            
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonParser jp = new JsonParser();
+            JsonElement je = jp.parse(in.readLine());
+            String prettyJsonString = gson.toJson(je);
+            System.out.println(prettyJsonString);
+            
+            connection.disconnect();
+            
+            return "1";
+        } catch(HTTPException he){
+        	he.printStackTrace();
+        	return "null";
+        } catch(Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+	}
+	
+	//rankingId = players or clans
+	public static String getLocations(String locationId, String rankingId){
+		try {
+            URL url = new URL ("https://api.clashofclans.com/v1/locations/" + locationId + "/rankings/" + rankingId);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Bearer " + token);
+            connection.setRequestProperty("Accept", "application/json");
+                        
+            InputStream content = (InputStream)connection.getInputStream();
+            BufferedReader in = new BufferedReader (new InputStreamReader (content));
+            
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonParser jp = new JsonParser();
+            JsonElement je = jp.parse(in.readLine());
+            String prettyJsonString = gson.toJson(je);
+            System.out.println(prettyJsonString);
+            
+            connection.disconnect();
+            
+            return "1";
+        } catch(HTTPException he){
+        	he.printStackTrace();
+        	return "null";
+        } catch(Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+	}
+	
+	
+	//////////////////////////////////////////////////////////////
+	/////                       CLANS                        /////
+	//////////////////////////////////////////////////////////////
+	
+	
+	// warFrequency = always, moreThanOncePerWeek, oncePerWeek, lessThanOncePerWeek, never or unknown(default)
+	public static String getClansByParameters(String name, String warFrequency, String minMembers, String maxMembers, String minClanPoints, String maxClanPoints, String limit, String after, String before){
+		try {
+			String strUrl = "https://api.clashofclans.com/v1/clans?name="+name;
+			if(!(warFrequency == null))
+				strUrl += "&warFrequency="+warFrequency;
+			if(!(minMembers == null))
+				strUrl += "&minMembers="+minMembers;
+			if(!(maxMembers == null))
+				strUrl += "&maxMembers="+maxMembers;
+			if(!(minClanPoints == null))
+				strUrl += "&minClanPoints="+minClanPoints;
+			if(!(maxClanPoints == null))
+				strUrl += "&maxClanPoints="+maxClanPoints;
+			if(!(limit == null))
+				strUrl += "&limit="+limit;
+			if(!(after == null))
+				strUrl += "&after="+after;
+			if(!(before == null))
+				strUrl += "&before="+before;
+			
+            URL url = new URL (strUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Bearer " + token);
+            connection.setRequestProperty("Accept", "application/json");
+                        
+            InputStream content = (InputStream)connection.getInputStream();
+            BufferedReader in = new BufferedReader (new InputStreamReader (content));
+            
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonParser jp = new JsonParser();
+            JsonElement je = jp.parse(in.readLine());
+            String prettyJsonString = gson.toJson(je);
+            System.out.println(prettyJsonString);
+            
+            connection.disconnect();
+            
+            return "1";
+        } catch(HTTPException he){
+        	he.printStackTrace();
+        	return "null";
+        } catch(Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+	}
+	
+	public static String getClansByTag(String clanTag){
+		try {
+			String strUrl = "https://api.clashofclans.com/v1/clans/"+clanTag.replace("#", "%23");
+			
+			
+            URL url = new URL (strUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Bearer " + token);
+            connection.setRequestProperty("Accept", "application/json");
+                        
+            InputStream content = (InputStream)connection.getInputStream();
+            BufferedReader in = new BufferedReader (new InputStreamReader (content));
+            
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonParser jp = new JsonParser();
+            JsonElement je = jp.parse(in.readLine());
+            String prettyJsonString = gson.toJson(je);
+            System.out.println(prettyJsonString);
+            
+            connection.disconnect();
+            
+            return "1";
+        } catch(HTTPException he){
+        	he.printStackTrace();
+        	return "null";
+        } catch(Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+	}
+	
+	public static String getClanMembersByTag(String clanTag){
+		try {
+			String strUrl = "https://api.clashofclans.com/v1/clans/"+clanTag.replace("#", "%23")+"/members";
+			
+			
+            URL url = new URL (strUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Bearer " + token);
+            connection.setRequestProperty("Accept", "application/json");
+                        
+            InputStream content = (InputStream)connection.getInputStream();
+            BufferedReader in = new BufferedReader (new InputStreamReader (content));
+            
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonParser jp = new JsonParser();
+            JsonElement je = jp.parse(in.readLine());
+            String prettyJsonString = gson.toJson(je);
+            System.out.println(prettyJsonString);
+            
+            connection.disconnect();
+            
+            return "1";
+        } catch(HTTPException he){
+        	he.printStackTrace();
+        	return "null";
+        } catch(Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+	}
+
+}
